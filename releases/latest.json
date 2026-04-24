@@ -1,0 +1,10 @@
+{
+  "product": "envelure",
+  "channel": "stable",
+  "version": "0.01",
+  "publishedAt": "2026-04-24T00:00:00Z",
+  "notesUrl": "https://github.com/saketlunker/envelure-releases",
+  "install": {
+    "npm": "npm install -g @envelure/coding-agent"
+  }
+}
