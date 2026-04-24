@@ -1,0 +1,11 @@
+*.zip
+*.tar.gz
+*.tgz
+*.exe
+*.msi
+*.dmg
+*.AppImage
+*.deb
+*.rpm
+*.pkg
+*.sha256.tmp
