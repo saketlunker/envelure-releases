@@ -1,0 +1,15 @@
+{
+  "product": "envelure",
+  "channel": "preview",
+  "version": "0.2.2",
+  "publishedAt": "2026-04-28T07:46:13Z",
+  "rollbackTarget": null,
+  "notesUrl": "https://github.com/saketlunker/envelure-releases/releases/tag/v0.2.2",
+  "checksums": {
+    "url": "https://github.com/saketlunker/envelure-releases/releases/download/v0.2.2/checksums.txt",
+    "sha256": "cbd82575e3cef3ab1052e898a59fe86e45c8687cdbb1ebba0e78eb3ef18076ca"
+  },
+  "install": {
+    "npm": "npm install -g envelure-preview"
+  }
+}
