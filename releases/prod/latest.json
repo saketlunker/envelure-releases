@@ -1,13 +1,13 @@
 {
   "product": "envelure",
   "channel": "prod",
-  "version": "0.2.4",
-  "publishedAt": "2026-04-28T10:27:01Z",
-  "rollbackTarget": "0.2.3",
-  "notesUrl": "https://github.com/saketlunker/envelure-releases/releases/tag/v0.2.4",
+  "version": "0.2.8",
+  "publishedAt": "2026-04-30T05:26:48Z",
+  "rollbackTarget": "0.2.4",
+  "notesUrl": "https://github.com/saketlunker/envelure-releases/releases/tag/v0.2.8",
   "checksums": {
-    "url": "https://github.com/saketlunker/envelure-releases/releases/download/v0.2.4/checksums.txt",
-    "sha256": "32e3c30cdebf4dfe66d1f84b43737a85b84943cafdcdcbb19bf9228e32e13130"
+    "url": "https://github.com/saketlunker/envelure-releases/releases/download/v0.2.8/checksums.txt",
+    "sha256": "222a6ab1a5b68980302f5de8bd875eb382b3836826fce5f559ff60b95d01b50f"
   },
   "install": {
     "npm": "npm install -g envelure"
@@ -15,9 +15,9 @@
   "bootstrap": {
     "strategy": "runtime"
   },
-  "promotedAt": "2026-04-28T10:30:07.675Z",
+  "promotedAt": "2026-04-30T05:39:04.734Z",
   "promotedFrom": {
     "channel": "preview",
-    "version": "0.2.4"
+    "version": "0.2.8"
   }
 }
