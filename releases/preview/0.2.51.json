@@ -70,5 +70,9 @@
     "codeSigning": "notarization/authenticode-not-yet-enabled"
   },
   "channelManifestUrl": "https://raw.githubusercontent.com/saketlunker/envelure-releases/main/releases/preview/latest.json",
-  "startupManifestUrl": "https://raw.githubusercontent.com/saketlunker/envelure-releases/main/releases/preview/latest.json"
+  "startupManifestUrl": "https://raw.githubusercontent.com/saketlunker/envelure-releases/main/releases/preview/latest.json",
+  "bootstrap": {
+    "strategy": "package-reinstall",
+    "reason": "Preview launchers and runtimes advance together before beta."
+  }
 }
