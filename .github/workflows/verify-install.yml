@@ -1,0 +1,42 @@
+name: Verify install
+
+# Answers "can someone actually install this?" by installing the published
+# package on clean runners, the same way an end user would.
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to install"
+        type: choice
+        default: envelure
+        options:
+          - envelure
+          - envelure-preview
+      version:
+        description: "Version or dist-tag"
+        type: string
+        default: latest
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Install published package
+        run: npm install -g "${{ inputs.package }}@${{ inputs.version }}" --foreground-scripts
+
+      - name: Run the installed binary
+        run: ${{ inputs.package }} --help
