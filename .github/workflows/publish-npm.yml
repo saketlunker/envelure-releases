@@ -1,0 +1,85 @@
+name: Publish npm launcher
+
+# The release machine cannot reach registry.npmjs.org, so the launcher is
+# published from this public repository instead. Public-repo Actions minutes
+# are free, which also keeps this path independent of private-repo billing.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Preview version to publish, e.g. 0.2.67"
+        required: true
+        type: string
+      dry_run:
+        description: "Validate without publishing to npm"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      TARBALL: envelure-preview-${{ inputs.version }}.tgz
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Download launcher tarball from release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download "v${{ inputs.version }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "$TARBALL" \
+            --dir .
+          ls -l "$TARBALL"
+
+      - name: Verify tarball identity
+        run: |
+          tar -xzOf "$TARBALL" package/package.json > pkg.json
+          name=$(node -p "require('./pkg.json').name")
+          version=$(node -p "require('./pkg.json').version")
+          echo "tarball contains $name@$version"
+          if [ "$name" != "envelure-preview" ]; then
+            echo "::error::expected package envelure-preview, got $name"
+            exit 1
+          fi
+          if [ "$version" != "${{ inputs.version }}" ]; then
+            echo "::error::tarball version $version does not match requested ${{ inputs.version }}"
+            exit 1
+          fi
+
+      - name: Confirm npm identity
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          who=$(npm whoami)
+          echo "npm authenticated as $who"
+          if [ "$who" != "saketlunker" ]; then
+            echo "::error::npm authenticated as $who, expected saketlunker"
+            exit 1
+          fi
+
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            npm publish "$TARBALL" --access public --dry-run
+            echo "dry run only - nothing was published"
+          else
+            npm publish "$TARBALL" --access public
+          fi
+
+      - name: Confirm published version
+        if: ${{ !inputs.dry_run }}
+        run: |
+          sleep 10
+          npm view envelure-preview version
