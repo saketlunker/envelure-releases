@@ -1,0 +1,19 @@
+name: Runner Smoke
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report runner
+        run: |
+          echo "runner: $RUNNER_OS $RUNNER_ARCH"
+          node --version
+          npm --version
+
+      - name: Reach npm registry
+        run: |
+          npm ping --registry=https://registry.npmjs.org/
+          npm view envelure-preview version --registry=https://registry.npmjs.org/
